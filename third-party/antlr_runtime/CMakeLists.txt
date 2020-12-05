@@ -1,28 +1,28 @@
 
 file(GLOB libantlrcpp_SRC
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/atn/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/dfa/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/misc/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/support/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree/pattern/*.cpp"
-  "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree/xpath/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/atn/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/dfa/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/misc/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/support/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree/pattern/*.cpp"
+  "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree/xpath/*.cpp"
 )
 
 add_library(antlr4_static STATIC ${libantlrcpp_SRC})
 
 target_include_directories(antlr4_static
   PUBLIC
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime
   PRIVATE  
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/atn
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/dfa
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/misc
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/support
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree/pattern
-  ${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/tree/xpath
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/atn
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/dfa
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/misc
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/support
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree/pattern
+  ${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/tree/xpath
   )
 
 #add_dependencies(antlr4_static make_lib_output_dir)
@@ -73,7 +73,7 @@ install(TARGETS antlr4_static
         DESTINATION lib
         EXPORT antlr4-targets)
 
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/third_party/antlr_runtime/" 
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/third-party/antlr_runtime/" 
         DESTINATION "include/antlr4-runtime"
         COMPONENT dev 
         FILES_MATCHING PATTERN "*.h"
