@@ -45,7 +45,8 @@ function (arvcc_executable)
         src/parser/gen/ARParserVisitor.cpp
         src/parser/gen/ARParserBaseVisitor.cpp
 
-
+        src/ir/ir.cpp
+        src/ir/ir.h
         ${BIN_SOURCES}
     )
 
