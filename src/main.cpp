@@ -1,12 +1,14 @@
 #include <iostream>
-
+#include "antlr_runtime/antlr4-runtime.h"
 
 using namespace std;
-
-
+using namespace antlr4;
 
 int main(void)
 {
-    cout << "hello arvcc" << endl;    
+    Parser parser = new Parser();
+
+
+
     return 0;
 }

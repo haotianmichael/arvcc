@@ -2,15 +2,28 @@
 #include <queue>
 
 /*
-    [opcode] [operand1] [operand2] [res] 
-*/
+   [opcode] [operand1] [operand2] [res] 
+ */
+namespace  IR{
 
-enum opCode{
+    enum opCode{
 
-    ASS,
+        ASS,
 
-    JMP,
-    LABEL,
+        JMP,
+        LABEL,
 
 
+    };
+
+    class irGenerator
+    {
+    public:
+        irGenerator ();
+        virtual ~irGenerator ();
+    
+    private:
+
+    };
+    
 };
