@@ -1,2 +1,5 @@
 build/
+Debug/
 **/*.tags
+.ccls-cache
+compile_commands.json

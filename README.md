@@ -1,22 +1,16 @@
 ## [Working On It]
 
 ## Introduction
-`arvcc` project aims to learn `C++`, `Compiler` and `Static Analysis` in a more efficient way.
+The arvcc project  is a simplified compiler infrastructure, with the goal of providing a easy-mode strategy to implement  and test several kinds of `optimization algorithms` mainly on static-analysis.
 
-* `Front-end:`  Use Antlr to parse C++ grammar
-* `IR:`  Design Three-address-Code for optimization and static analysis
-* `Library:`  Accomplish some C++ feartures like smart pointers, stl
-* `Back-end:` Use traditional algorithm for codegen
+ 
 
 
-## Components
-* googletest (build testSuite for arvcc)
-* flask (visualizing collected data from arvcc's testSuite )
-* antlr
-* llvm  
 
 ## Build
->  Dependencies:    Clang++ 9.0.0
+>  * Dependencies:    Clang++ 9.0.0
+>
+>  * testSuite:  Googletest
 
 
 

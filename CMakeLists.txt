@@ -4,7 +4,6 @@ project(arvcc)
 
 
 option(ARVCC_BUILD_TESTS "GTest" OFF)
-option(ARVCC_ANTLR4_GEN "Use Antlr4 gen" ON)
 
 
 set(CMAKE_CXX_STANDARD 17)
@@ -15,11 +14,11 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS "-pthread")
 endif(UNIX)
 
-# generate parser
-if (ARVCC_ANTLR4_GEN)
+# generate IR
+if (ARVCC_IR_GEN)
     execute_process(
         
-    COMMAND sh build.sh
+    #COMMAND sh build.sh
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 endif()
@@ -27,43 +26,36 @@ endif()
 
 
 function (arvcc_executable)
-    cmake_parse_arguments(BIN "" "NAME" "SOURCES;INCLUDES;LIBS" ${ARGN}) 
+    cmake_parse_arguments(BIN "" "NAME" "COMPILER;INCLUDES;LIBS" ${ARGN}) 
 
 
     set(BIN_INCLUDES
         PRIVATE
-        src/
-        third-party/
+
 
         ${BIN_INCLUDES}
     )
 
 
-    set(BIN_SOURCES
-        src/parser/gen/ARLexer.cpp 
-        src/parser/gen/ARParser.cpp 
-        src/parser/gen/ARParserVisitor.cpp
-        src/parser/gen/ARParserBaseVisitor.cpp
+    set(BIN_COMPILER
 
-        src/ir/ir.cpp src/ir/ir.h
-        ${BIN_SOURCES}
+        compiler/ir/ir.cpp compiler/ir/ir.h
+        ${BIN_COMPILER}
     )
 
     set(BIN_LIBS
-        antlr4_static 
+
         ${BIN_LIBS}
     )
 
-    add_executable(${BIN_NAME} ${BIN_SOURCES})
+    add_executable(${BIN_NAME} ${BIN_COMPILER})
     target_include_directories(${BIN_NAME} ${BIN_INCLUDES})
     target_link_libraries(${BIN_NAME} ${BIN_LIBS})
 endfunction()
 
-add_subdirectory(third-party/antlr_runtime)
+#add_subdirectory(third-party/)
 
 arvcc_executable(
     NAME arvcc
-    SOURCES src/main.cpp    
+    COMPILER compiler/main.cpp    
 )
-
-
