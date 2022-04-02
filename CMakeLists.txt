@@ -26,36 +26,39 @@ endif()
 
 
 function (arvcc_executable)
-    cmake_parse_arguments(BIN "" "NAME" "COMPILER;INCLUDES;LIBS" ${ARGN}) 
+    cmake_parse_arguments(BIN "" "NAME" "COMPILER;INCLUDES;XLIBS" ${ARGN}) 
 
 
     set(BIN_INCLUDES
         PRIVATE
 
-
+        compiler/include/
         ${BIN_INCLUDES}
     )
 
 
     set(BIN_COMPILER
 
-        compiler/ir/ir.cpp compiler/ir/ir.h
+        compiler/lib/
+        compiler/tools/
         ${BIN_COMPILER}
     )
 
-    set(BIN_LIBS
 
-        ${BIN_LIBS}
+    # added external libs
+    set(BIN_XLIBS
+
+        ${BIN_XLIBS}
     )
 
     add_executable(${BIN_NAME} ${BIN_COMPILER})
     target_include_directories(${BIN_NAME} ${BIN_INCLUDES})
-    target_link_libraries(${BIN_NAME} ${BIN_LIBS})
+    target_link_libraries(${BIN_NAME} ${BIN_XLIBS})
 endfunction()
 
 #add_subdirectory(third-party/)
 
 arvcc_executable(
     NAME arvcc
-    COMPILER compiler/main.cpp    
+    COMPILER compiler/tools/driver.cpp
 )
