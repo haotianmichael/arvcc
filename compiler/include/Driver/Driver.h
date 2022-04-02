@@ -5,6 +5,7 @@
 
 namespace arvcc {
 
+class Compilation;
 class Driver {
 
 private:
@@ -14,12 +15,28 @@ private:
 
 	DiagnosticEngine& Diags;
 
+	// command line arguments
+	std::vector<const char*> Args;
+
 public:
-	Driver(DiagnosticEngine& diags)
+	Driver(DiagnosticEngine& diags, const char** args, int argc)
 			: Diags(diags) {
+		if (1 == argc)
+			Diags.DiagError("no Input files");
+		for (int i = 0; i < argc; i++)
+			Args.push_back(args[i]);
 	}
 
-	//int ParseArguments();
+public:
+	// Construct a Compilation object for a
+	// command line arguments vector
+	Compilation* BuildCompilation();
+
+	// Execute a compilation according to
+	// command line arguments
+	int ExecuteCompilation(Compilation& C);
+
+	void ParseArgStrings();
 };
 
 } // namespace arvcc

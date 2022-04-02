@@ -7,16 +7,19 @@
 //===----------------------------------------------------===//
 
 #include "Driver/Driver.h"
+#include "Driver/Compilation.h"
 
 using namespace arvcc;
+
 int main(int Argc, const char** Argv) {
 
-	DiagnosticEngine Diags(Argv, Argc);
-	if (Diags.hasArgs()) {
-		Diags.DiagError("no input files");
+	DiagnosticEngine             Diags;
+	Driver                       TheDriver(Diags, Argv, Argc);
+	std::unique_ptr<Compilation> C(TheDriver.BuildCompilation());
+	int                          Res = 1;
+	if (C) {
+		Res = TheDriver.ExecuteCompilation(*C);
 	}
-	Driver TheDriver(Diags);
-	int    Res = 1;
 
 	std::cout << "hello, my name is arvcc." << std::endl;
 	return Res;

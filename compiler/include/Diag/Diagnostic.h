@@ -3,22 +3,14 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 namespace arvcc {
 
 class DiagnosticEngine {
-private:
-	const char** Args;
-	int          ArgNumber;
-
 public:
-	DiagnosticEngine(const char** argv, int argc)
-			: Args(argv), ArgNumber(argc) {
-	}
-
-	bool hasArgs();
 	void DiagError(std::string message);
 };
 
