@@ -1,20 +1,25 @@
 #ifndef ARVCC_DRIVER_H
 #define ARVCC_DRIVER_H
 
-#include <iostream>
-#include <string>
+#include "Diag/Diagnostic.h"
 
 namespace arvcc {
 
 class Driver {
 
-public:
-	/// The name of driver
-     std::string Name;
+private:
+	// The path the driver executable was invoked
+	// from the command line
+	std::string Dir;
 
-	/// The path the driver executable was invoked
-	/// from the command line
-     std::string Dir;
+	DiagnosticEngine& Diags;
+
+public:
+	Driver(DiagnosticEngine& diags)
+			: Diags(diags) {
+	}
+
+	//int ParseArguments();
 };
 
 } // namespace arvcc

@@ -39,8 +39,8 @@ function (arvcc_executable)
 
     set(BIN_COMPILER
 
-        compiler/lib/
-        compiler/tools/
+        compiler/lib/Diag/Diagnostic.cpp
+        compiler/lib/Driver/Driver.cpp
         ${BIN_COMPILER}
     )
 
