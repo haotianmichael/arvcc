@@ -36,7 +36,12 @@ public:
 	// command line arguments
 	int ExecuteCompilation(Compilation& C);
 
+	// Compiler Frontend
+	int ExecuteCC1Tool();
+
 	void ParseArgStrings();
+
+	bool HasCC1Tool();
 };
 
 } // namespace arvcc
