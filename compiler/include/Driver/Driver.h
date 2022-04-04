@@ -2,6 +2,7 @@
 #define ARVCC_DRIVER_H
 
 #include "Diag/Diagnostic.h"
+#include "Option/ArgList.h"
 
 namespace arvcc {
 
@@ -17,6 +18,9 @@ private:
 
 	// command line arguments
 	std::vector<const char*> Args;
+
+    // parsed arguments
+    std::unique_ptr<opt::InputArgList> CLOptions;
 
 public:
 	Driver(DiagnosticEngine& diags, const char** args, int argc)
@@ -39,7 +43,7 @@ public:
 	// Compiler Frontend
 	int ExecuteCC1Tool();
 
-	void ParseArgStrings();
+    opt::InputArgList ParseArgStrings(bool ContainsError);
 
 	bool HasCC1Tool();
 };
