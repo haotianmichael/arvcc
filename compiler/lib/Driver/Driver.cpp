@@ -11,7 +11,9 @@ using namespace arvcc;
 
 Compilation* Driver::BuildCompilation() {
 
-	ParseArgStrings();
+	bool ContainsError;
+	CLOptions = std::make_unique<opt::InputArgList>(
+			ParseArgStrings(ContainsError));
 	Compilation* C = new Compilation(*this);
 
 	return C;
@@ -21,14 +23,13 @@ int Driver::ExecuteCompilation(Compilation& C) {
 	return 0;
 }
 
-void Driver::ParseArgStrings() {
+opt::InputArgList Driver::ParseArgStrings(bool ContainsError) {
 
-	return;
 }
 
 bool Driver::HasCC1Tool() {
 
-	auto FirstArg = std::find_if(Args.begin() + 1, Args.end(),
-															 [](const char* A) { return A != nullptr; });
+	auto FirstArg = std::find_if(
+			Args.begin() + 1, Args.end(), [](const char* A) { return A != nullptr; });
 	return (FirstArg != Args.end() && !strcmp(*FirstArg, "-cc1"));
 }
