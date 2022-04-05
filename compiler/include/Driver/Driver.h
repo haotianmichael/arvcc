@@ -3,6 +3,8 @@
 
 #include "Diag/Diagnostic.h"
 #include "Option/ArgList.h"
+#include "Option/OptTable.h"
+#include "Driver/DriverOption.h"
 
 namespace arvcc {
 
@@ -19,8 +21,8 @@ private:
 	// command line arguments
 	std::vector<const char*> Args;
 
-    // parsed arguments
-    std::unique_ptr<opt::InputArgList> CLOptions;
+	// parsed arguments
+	std::unique_ptr<opt::InputArgList> CLOptions;
 
 public:
 	Driver(DiagnosticEngine& diags, const char** args, int argc)
@@ -43,7 +45,12 @@ public:
 	// Compiler Frontend
 	int ExecuteCC1Tool();
 
-    opt::InputArgList ParseArgStrings(bool ContainsError);
+    // 
+	const opt::OptTable& getOpts() const {
+		return opt::getDriverOptionTable();
+	}
+
+	opt::InputArgList ParseArgStrings(bool ContainsError);
 
 	bool HasCC1Tool();
 };

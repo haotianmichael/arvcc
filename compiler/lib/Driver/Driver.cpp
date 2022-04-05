@@ -25,6 +25,12 @@ int Driver::ExecuteCompilation(Compilation& C) {
 
 opt::InputArgList Driver::ParseArgStrings(bool ContainsError) {
 
+	unsigned          MissingArgIndex;
+	unsigned          MissingArgCount;
+	opt::InputArgList Args =
+			getOpts().ParseArgs(this->Args, MissingArgIndex, MissingArgCount);
+
+	return Args;
 }
 
 bool Driver::HasCC1Tool() {
