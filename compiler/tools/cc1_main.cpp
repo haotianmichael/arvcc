@@ -7,8 +7,6 @@
 
 #include "Driver/Driver.h"
 
-using namespace arvcc;
+using namespace arvcc::driver;
 
-int Driver::ExecuteCC1Tool() {
-	return 0;
-}
+int Driver::ExecuteCC1Tool() { return 0; }

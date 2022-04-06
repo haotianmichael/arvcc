@@ -17,13 +17,13 @@ namespace opt {
 
 class Option {
 protected:
-	const OptTable::Info* Info;
-	const OptTable*       Owner;
+  const OptTable::Info *Info;
+  const OptTable *Owner;
 
 public:
-	Option(const OptTable::Info* Info, const OptTable* Owner);
+  Option(const OptTable::Info *Info, const OptTable *Owner);
 
-    bool matches(OptSpecifier ID) const;
+  bool matches(OptSpecifier ID) const;
 };
 
 } // namespace opt
