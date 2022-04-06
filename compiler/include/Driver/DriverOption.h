@@ -3,29 +3,23 @@
 #include "Option/OptTable.h"
 
 namespace arvcc {
-namespace opt {
+namespace driver {
 
-static const std::vector<OptTable::Info> InfoTable = {
-	OptTable::Info{ "-cc1", 0, '0', ' ', "compiler frontend" }
-};
+static const std::vector<opt::OptTable::Info> InfoTable = {
+    opt::OptTable::Info{"-cc1", 0, '0', ' ', "compiler frontend"}};
 
-class DriverOptTable : public OptTable {
+class DriverOptTable : public opt::OptTable {
 public:
-	DriverOptTable()
-			: OptTable(InfoTable) {
-	}
+  DriverOptTable() : OptTable(InfoTable) {}
 };
 
-const opt::OptTable& getDriverOptionTable() {
+static const opt::OptTable &getDriverOptionTable() {
 
-	static const DriverOptTable* Table = []() {
-		auto Result = std::unique_ptr<DriverOptTable>();
-		return Result.release();
-	}();
-	return *Table;
+  static const DriverOptTable Tab = DriverOptTable();
+  return Tab;
 }
 
-} // namespace opt
+} // namespace driver
 } // namespace arvcc
 
 #endif

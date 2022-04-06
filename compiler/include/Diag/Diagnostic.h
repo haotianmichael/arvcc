@@ -8,11 +8,12 @@
 using namespace std;
 
 namespace arvcc {
-
+namespace Diag {
 class DiagnosticEngine {
 public:
-	void DiagError(std::string message);
+  void DiagError(std::string message);
 };
+} // namespace Diag
 
 } // namespace arvcc
 #endif

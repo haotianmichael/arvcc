@@ -14,29 +14,19 @@ namespace opt {
 class Option;
 
 class OptSpecifier {
-	unsigned ID = 0;
+  unsigned ID = 0;
 
 public:
-	OptSpecifier()              = default;
-	explicit OptSpecifier(bool) = delete;
-	OptSpecifier(unsigned ID)
-			: ID(ID) {
-	}
-	OptSpecifier(const Option* opt);
+  // OptSpecifier() = default;
+  // explicit OptSpecifier(bool) = delete;
+  OptSpecifier(unsigned ID) : ID(ID) {}
+  // OptSpecifier(const Option *opt);
 
-	bool isValid() const {
-		return ID != 0;
-	}
-	unsigned getID() const {
-		return ID;
-	}
+  bool isValid() const { return ID != 0; }
+  unsigned getID() const { return ID; }
 
-	bool operator==(OptSpecifier Opt) const {
-		return ID == Opt.getID();
-	}
-	bool operator!=(OptSpecifier Opt) const {
-		return !(*this == Opt);
-	}
+  bool operator==(OptSpecifier Opt) const { return ID == Opt.getID(); }
+  bool operator!=(OptSpecifier Opt) const { return !(*this == Opt); }
 };
 
 } // namespace opt

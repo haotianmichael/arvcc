@@ -4,22 +4,20 @@
 #include "Driver/Driver.h"
 
 namespace arvcc {
+namespace driver {
 
 class Compilation {
-	const Driver& Dir;
+  const Driver &Dir;
 
-	// Whether an error during parsing the input args
-	bool ContainsError;
+  // Whether an error during parsing the input args
+  bool ContainsError;
 
 public:
-	Compilation(const Driver& dir)
-			: Dir(dir) {
-	}
+  Compilation(const Driver &dir) : Dir(dir) {}
 
-	bool containsError() const {
-		return ContainsError;
-	}
+  bool containsError() const { return ContainsError; }
 };
 
+} // namespace driver
 } // namespace arvcc
 #endif

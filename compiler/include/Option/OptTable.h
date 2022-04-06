@@ -7,6 +7,7 @@
 #define ARVCC_OPTION_TABLE_H
 
 #include "Option/OptSpecifier.h"
+#include <iostream>
 #include <vector>
 
 namespace arvcc {
@@ -20,59 +21,57 @@ class Option;
 
 class OptTable {
 public:
-	// Entry for a single option instance in the option data table.
-	struct Info {
-		const char*   Name;
-		unsigned      ID;
-		unsigned char Kind;
-		unsigned char Param;
-		const char*   Values;
-	};
+  // Entry for a single option instance in the option data table.
+  struct Info {
+    const char *Name;
+    unsigned ID;
+    unsigned char Kind;
+    unsigned char Param;
+    const char *Values;
+  };
 
 private:
-	// The option information table.
-	std::vector<Info> OptionInfos;
-	unsigned          InputOptionID   = 0;
-	unsigned          UnknownOptionID = 0;
-
-private:
-	const Info& getInfo(OptSpecifier Opt) const {
-		unsigned id = Opt.getID();
-		return OptionInfos[id - 1];
-	}
-
-protected:
-	OptTable(const std::vector<Info> OptionInfos);
+  // The option information table.
+  std::vector<Info> OptionInfos;
+  unsigned InputOptionID = 0;
+  unsigned UnknownOptionID = 0;
 
 public:
-	// Return the corresponding option
-	const Option getOption(OptSpecifier Opt) const;
+  const Info &getInfo(OptSpecifier Opt) const {
+    unsigned id = Opt.getID();
+    return OptionInfos[0];
+  }
 
-	const char* getOptionName(OptSpecifier id) const {
-		return getInfo(id).Name;
-	}
+protected:
+  OptTable(const std::vector<Info> OptionInfos);
 
-	const char* getOptionValues(OptSpecifier id) const {
-		return getInfo(id).Values;
-	}
+public:
+  // Return the corresponding option
+  const Option getOption(OptSpecifier Opt) const;
 
-	unsigned getOptionID(OptSpecifier id) const {
-		return getInfo(id).ID;
-	}
+  const char *getOptionName(OptSpecifier id) const { return getInfo(id).Name; }
 
-	unsigned char getOptionKind(OptSpecifier id) const {
-		return getInfo(id).Kind;
-	}
+  const char *getOptionValues(OptSpecifier id) const {
+    return getInfo(id).Values;
+  }
 
-	unsigned char getOptionParam(OptSpecifier id) const {
-		return getInfo(id).Param;
-	}
+  unsigned getOptionID(OptSpecifier id) const { return getInfo(id).ID; }
 
-	// Parse a single argument.
-	std::unique_ptr<Arg> ParseOneArg(const ArgList& Args, unsigned& Index) const;
+  unsigned char getOptionKind(OptSpecifier id) const {
+    return getInfo(id).Kind;
+  }
 
-	// Parse a list of arguments into an InputArgList.
-	InputArgList ParseArgs(std::vector<const char*> Args, unsigned& MissingArgIndex, unsigned& MissingArgCount) const;
+  unsigned char getOptionParam(OptSpecifier id) const {
+    return getInfo(id).Param;
+  }
+
+  // Parse a single argument.
+  std::unique_ptr<Arg> ParseOneArg(const ArgList &Args, unsigned &Index) const;
+
+  // Parse a list of arguments into an InputArgList.
+  InputArgList ParseArgs(std::vector<const char *> Args,
+                         unsigned &MissingArgIndex,
+                         unsigned &MissingArgCount) const;
 };
 
 } // namespace opt

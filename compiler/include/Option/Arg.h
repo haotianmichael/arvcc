@@ -9,7 +9,6 @@
 
 #include "Option/Option.h"
 #include <iostream>
-#include <vector>
 
 namespace arvcc {
 namespace opt {
@@ -17,34 +16,28 @@ namespace opt {
 // A concrets instance of a particular driver option
 class Arg {
 private:
-	// The option this argument is an instance of.
-	const Option opt;
+  // The option this argument is an instance of.
+  const Option opt;
 
-	// The index at which this argument appears in the
-	// ArgList
-	unsigned index;
+  // The index at which this argument appears in the
+  // ArgList
+  unsigned index;
 
-	// The argument values
-	std::vector<const char*> value;
+  // The argument values
+  std::vector<const char *> value;
 
 public:
-	Arg(const Option Opt, unsigned Index);
-	Arg(const Option Opt, unsigned Index, const char* Value);
-	Arg(const Arg&) = delete;
-	Arg& operator=(const Arg&) = delete;
-	~Arg();
+  Arg(const Option Opt, unsigned Index);
+  Arg(const Option Opt, unsigned Index, const char *Value);
+  Arg(const Arg &) = delete;
+  Arg &operator=(const Arg &) = delete;
+  ~Arg();
 
-	const Option& getOption() {
-		return opt;
-	}
+  const Option &getOption() { return opt; }
 
-	unsigned getIndex() {
-		return index;
-	}
+  unsigned getIndex() { return index; }
 
-	std::vector<const char*>& getValue() {
-		return value;
-	}
+  std::vector<const char *> &getValue() { return value; }
 };
 
 } // namespace opt
