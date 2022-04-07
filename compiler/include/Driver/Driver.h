@@ -28,7 +28,8 @@ private:
   std::unique_ptr<opt::InputArgList> CLOptions;
 
 public:
-  Driver(DiagnosticEngine &diags, const char **args, int argc) : Diags(diags) {
+  Driver(DiagnosticEngine &diags, const char **args, int argc)
+      : Diags(diags), Dir(args[0]) {
     if (1 == argc)
       Diags.DiagError("no Input files");
     for (int i = 0; i < argc; i++)
@@ -45,14 +46,14 @@ public:
   int ExecuteCompilation(Compilation &C);
 
   // Compiler Frontend
+  bool HasCC1Tool();
+
   int ExecuteCC1Tool();
 
-  //
+  // Arguments Parsing Tools
   const opt::OptTable &getOpts() const { return getDriverOptionTable(); }
 
   opt::InputArgList ParseArgStrings(bool ContainsError);
-
-  bool HasCC1Tool();
 };
 
 } // namespace driver

@@ -22,6 +22,7 @@ Compilation *Driver::BuildCompilation() {
 
 int Driver::ExecuteCompilation(Compilation &C) { return 0; }
 
+// vector<const char*> ---> vector<Args>
 opt::InputArgList Driver::ParseArgStrings(bool ContainsError) {
 
   unsigned MissingArgIndex;

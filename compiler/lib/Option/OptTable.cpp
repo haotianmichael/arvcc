@@ -14,6 +14,7 @@ InputArgList OptTable::ParseArgs(std::vector<const char *> Args,
                                  unsigned &MissingArgIndex,
                                  unsigned &MissingArgCount) const {
 
-  InputArgList *input = new InputArgList();
-  return *input;
+  //InputArgList input(Args.begin(), Args.end());
+
+  //return input;
 }
