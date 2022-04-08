@@ -42,6 +42,9 @@ function (arvcc_executable)
         compiler/lib/Diag/Diagnostic.cpp
         compiler/lib/Driver/Driver.cpp
         compiler/lib/Option/OptTable.cpp
+        compiler/lib/Option/Arg.cpp
+        compiler/lib/Option/ArgList.cpp
+        compiler/lib/Option/Option.cpp
         compiler/tools/cc1_main.cpp
         ${BIN_COMPILER}
     )

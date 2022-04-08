@@ -24,6 +24,8 @@ public:
   Option(const OptTable::Info *Info, const OptTable *Owner);
 
   bool matches(OptSpecifier ID) const;
+
+  unsigned getID() const { return Info->ID; }
 };
 
 } // namespace opt
