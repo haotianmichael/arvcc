@@ -18,9 +18,7 @@ class OptSpecifier {
 
 public:
   OptSpecifier() = default;
-  explicit OptSpecifier(bool) = delete;
   OptSpecifier(unsigned ID) : ID(ID) {}
-  OptSpecifier(const Option *opt);
 
   bool isValid() const { return ID != 0; }
   unsigned getID() const { return ID; }

@@ -22,7 +22,7 @@ public:
 
   void ReleaseMem();
   void append(Arg *A);
-  virtual const char *getArgString(unsigned Index) const;
+  virtual const char *getArgString(unsigned Index) const = 0;
 };
 
 // InputArgList
