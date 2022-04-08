@@ -41,8 +41,8 @@ public:
     return OptionInfos[0];
   }
 
-protected:
   OptTable(const std::vector<Info> OptionInfos);
+  ~OptTable() = default;
 
 public:
   // Return the corresponding option
@@ -65,7 +65,7 @@ public:
   }
 
   // Parse a single argument.
-  std::unique_ptr<Arg> ParseOneArg(const ArgList &Args, unsigned &Index) const;
+  std::unique_ptr<Arg> ParseOneArg(const ArgList  &Args, unsigned &Index) const;
 
   // Parse a list of arguments into an InputArgList.
   InputArgList ParseArgs(std::vector<const char *> Args,

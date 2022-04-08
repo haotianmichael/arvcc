@@ -15,7 +15,7 @@ void ArgList::ReleaseMem() {
 }
 
 void InputArgList::ReleaseMemory() {
-  ReleaseMem();
+   ReleaseMem();
   for (auto Arg : this->ArgStrings) {
     delete Arg;
   }

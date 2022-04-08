@@ -1,5 +1,4 @@
 #include "Option/Option.h"
-#include "Option/OptSpecifier.h"
 
 using namespace arvcc::opt;
 

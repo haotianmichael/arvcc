@@ -30,10 +30,7 @@ private:
   std::vector<const char *> value;
 
 public:
-  Arg(const Option Opt, unsigned Index);
   Arg(const Option Opt, unsigned Index, const char *Value);
-  // Arg(const Arg &) = delete;
-  // Arg &operator=(const Arg &) = delete;
   ~Arg();
 
   const Option &getOption() { return opt; }
