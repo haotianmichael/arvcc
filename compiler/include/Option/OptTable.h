@@ -5,7 +5,6 @@
 
 #ifndef ARVCC_OPTION_TABLE_H
 #define ARVCC_OPTION_TABLE_H
-
 #include "Option/OptSpecifier.h"
 #include <iostream>
 #include <vector>

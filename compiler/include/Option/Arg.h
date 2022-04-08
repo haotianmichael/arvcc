@@ -23,14 +23,17 @@ private:
   // ArgList
   unsigned index;
 
+  // Does this argument own its value?
+  mutable unsigned OwnsValues : 1;
+
   // The argument values
   std::vector<const char *> value;
 
 public:
   Arg(const Option Opt, unsigned Index);
   Arg(const Option Opt, unsigned Index, const char *Value);
-  Arg(const Arg &) = delete;
-  Arg &operator=(const Arg &) = delete;
+  // Arg(const Arg &) = delete;
+  // Arg &operator=(const Arg &) = delete;
   ~Arg();
 
   const Option &getOption() { return opt; }
