@@ -1,3 +1,10 @@
+//===---------------------------------------------------===//
+//
+// Abstract Representation for a single form
+// of Driver argument.
+//
+//===---------------------------------------------------===//
+
 #include "Option/Option.h"
 
 using namespace arvcc::opt;
