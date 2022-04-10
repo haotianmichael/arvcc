@@ -1,9 +1,3 @@
-//===-----------------------------------------===//
-//
-// Define class of the parsed args.
-//
-//===-----------------------------------------===//
-
 #ifndef ARVCC_ARGLIST_H
 #define ARVCC_ARGLIST_H
 

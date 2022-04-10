@@ -1,12 +1,9 @@
-//===-------------------------------------------------===//
-//
-// Provide access to the Option info table.
-// ===-------------------------------------------------===//
-
 #ifndef ARVCC_OPTION_TABLE_H
 #define ARVCC_OPTION_TABLE_H
 #include "Option/OptSpecifier.h"
+#include <cassert>
 #include <iostream>
+#include <string>
 #include <vector>
 
 namespace arvcc {
@@ -22,11 +19,13 @@ class OptTable {
 public:
   // Entry for a single option instance in the option data table.
   struct Info {
+    const char *const *Prefix;
     const char *Name;
-    unsigned ID;
-    unsigned char Kind;
-    unsigned char Param;
-    const char *Values;
+    unsigned ID = 0;
+    unsigned char Kind = '0';
+    unsigned int Flags;
+    const char *HelpText;
+    const char *MetaVar = nullptr;
   };
 
 private:
@@ -35,10 +34,15 @@ private:
   unsigned InputOptionID = 0;
   unsigned UnknownOptionID = 0;
 
+  // The union of all option prefixes, If an argument does not begin with
+  // one of these, it is an input.
+  std::vector<std::string> PrefixesUnion;
+
 public:
   const Info &getInfo(OptSpecifier Opt) const {
     unsigned id = Opt.getID();
-    return OptionInfos[0];
+    assert(id > 0 && id - 1 < OptionInfos.size() && "Invalid Option ID.");
+    return OptionInfos[id - 1];
   }
 
   OptTable(const std::vector<Info> OptionInfos);
@@ -48,10 +52,11 @@ public:
   // Return the corresponding option
   const Option getOption(OptSpecifier Opt) const;
 
+  // get elements
   const char *getOptionName(OptSpecifier id) const { return getInfo(id).Name; }
 
-  const char *getOptionValues(OptSpecifier id) const {
-    return getInfo(id).Values;
+  const char *getOptionHelp(OptSpecifier id) const {
+    return getInfo(id).HelpText;
   }
 
   unsigned getOptionID(OptSpecifier id) const { return getInfo(id).ID; }
@@ -60,12 +65,8 @@ public:
     return getInfo(id).Kind;
   }
 
-  unsigned char getOptionParam(OptSpecifier id) const {
-    return getInfo(id).Param;
-  }
-
   // Parse a single argument.
-  std::unique_ptr<Arg> ParseOneArg(const ArgList  &Args, unsigned &Index) const;
+  std::unique_ptr<Arg> ParseOneArg(const ArgList &Args, unsigned &Index) const;
 
   // Parse a list of arguments into an InputArgList.
   InputArgList ParseArgs(std::vector<const char *> Args,

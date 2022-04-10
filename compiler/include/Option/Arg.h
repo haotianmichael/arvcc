@@ -1,14 +1,7 @@
-//===-----------------------------------------===//
-//
-// Define class of the parsed args.
-//
-//===-----------------------------------------===//
-
 #ifndef ARVCC_ARG_H
 #define ARVCC_ARG_H
 
 #include "Option/Option.h"
-#include <iostream>
 
 namespace arvcc {
 namespace opt {

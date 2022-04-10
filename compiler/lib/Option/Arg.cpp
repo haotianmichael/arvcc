@@ -1,3 +1,9 @@
+//===-------------------------------------===//
+//
+// Define class of the parsed args.
+//
+//===-------------------------------------===//
+
 #include "Option/Arg.h"
 #include "Option/Option.h"
 
