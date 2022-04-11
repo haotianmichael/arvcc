@@ -11,20 +11,20 @@
 using namespace arvcc::opt;
 
 OptTable::OptTable(const std::vector<Info> Infos) : OptionInfos(Infos) {
-    for(unsigned i = 0; i < OptionInfos.size(); i ++) {
-        if(const char *const *P = getInfo(i).Prefix) {
-            PrefixesUnion.push_back(*P);
-        } 
+  for (unsigned i = 1; i < OptionInfos.size(); i++) {
+    if (const char *const *P = getInfo(i).Prefix) {
+      for (; *P != nullptr; ++P) {
+        PrefixesUnion.insert(*P);
+      }
     }
+  }
 }
 
-static bool isInput(std::vector<std::string> PrefixesUnion, const char *str) {
+static bool isInput(std::set<const char *> PrefixesUnion, const char *str) {
 
-  if (!strcmp(str, "-"))
-    return true;
   for (auto prefix : PrefixesUnion) {
-    if(strcmp(prefix.c_str(), str))
-        return false;
+    if (!strcmp(prefix, str))
+      return false;
   }
   return true;
 }
