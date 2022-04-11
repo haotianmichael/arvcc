@@ -35,7 +35,7 @@ opt::InputArgList Driver::ParseArgStrings(bool ContainsError) {
 
 bool Driver::HasCC1Tool() {
 
-  auto FirstArg = std::find_if(Args.begin() + 1, Args.end(),
+  auto FirstArg = std::find_if(Args.begin(), Args.end(),
                                [](const char *A) { return A != nullptr; });
   return (FirstArg != Args.end() && !strcmp(*FirstArg, "-cc1"));
 }
