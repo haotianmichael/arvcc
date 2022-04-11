@@ -32,7 +32,7 @@ public:
       : Diags(diags), Dir(args[0]) {
     if (1 == argc)
       Diags.DiagError("no Input files");
-    for (int i = 0; i < argc; i++)
+    for (int i = 1; i < argc; i++)
       Args.push_back(args[i]);
   }
 

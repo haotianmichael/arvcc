@@ -27,6 +27,7 @@ private:
   void ReleaseMemory();
 
 public:
+  InputArgList() = default;
   InputArgList(std::vector<const char *>);
   ~InputArgList() { ReleaseMemory(); }
 
