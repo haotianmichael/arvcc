@@ -20,9 +20,4 @@ void ArgList::ReleaseMem() {
 InputArgList::InputArgList(std::vector<const char *> ArgArr)
     : ArgStrings(ArgArr) {}
 
-void InputArgList::ReleaseMemory() {
-  ReleaseMem();
-  for (auto Arg : this->ArgStrings) {
-    delete Arg;
-  }
-}
+void InputArgList::ReleaseMemory() { ReleaseMem(); }
