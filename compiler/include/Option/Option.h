@@ -8,6 +8,24 @@ namespace arvcc {
 namespace opt {
 
 class Option {
+public:
+  // For the goal of parsing different kinds of CL arguments
+  enum OptionClass {
+    GroupClass = 0,
+    InputClass,
+    UnknownClass,
+    FlagClass,
+    JoinedClass,
+    ValuesClass,
+    SeparateClass,
+    RemainingArgClass,
+    RemainingArgsJoinedClass,
+    CommaJoinedClass,
+    MultiArgClass,
+    JoinedOrSeparateClass,
+    JoinedAndSeparateClass
+  };
+
 protected:
   const OptTable::Info *Info;
   const OptTable *Owner;
