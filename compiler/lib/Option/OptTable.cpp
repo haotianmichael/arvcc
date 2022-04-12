@@ -7,6 +7,7 @@
 #include "Option/OptTable.h"
 #include "Option/Arg.h"
 #include "Option/ArgList.h"
+#include <algorithm>
 
 using namespace arvcc::opt;
 
@@ -44,6 +45,12 @@ std::unique_ptr<Arg> OptTable::ParseOneArg(const ArgList &Args,
   const char *Str = Args.getArgString(Index);
   if (isInput(PrefixesUnion, Str))
     return std::make_unique<Arg>(getOption(InputOptionID), Index++, Str);
+
+  // FIXME: Try to search more efficiently.
+  const Info *Start = OptionInfos.data();
+  const Info *End = OptionInfos.data() + OptionInfos.size();
+  // std::vector<Info>::iterator opt = find(OptionInfos.begin(),
+  // OptionInfos.end(), "");
 
   return std::make_unique<Arg>(getOption(UnknownOptionID), Index++, Str);
 }
