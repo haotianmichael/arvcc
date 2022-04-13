@@ -12,6 +12,9 @@ private:
   // The option this argument is an instance of.
   const Option opt;
 
+  // How this instance of the option was spelled
+  std::string Spelling;
+
   // The index at which this argument appears in the
   // ArgList
   unsigned index;
@@ -23,7 +26,9 @@ private:
   std::vector<const char *> value;
 
 public:
-  Arg(const Option Opt, unsigned Index, const char *Value);
+  Arg(const Option Opt, std::string Spelling, unsigned Index);
+  Arg(const Option Opt, std::string Spelling, unsigned Index,
+      const char *Value);
   ~Arg();
 
   const Option &getOption() { return opt; }

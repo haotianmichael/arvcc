@@ -62,7 +62,9 @@ static const std::vector<opt::OptTable::Info> InfoTable = {
          "Specify name of main file output in depfile"},
     // FIXME: DriverFlag | ClangFlag
     INFO{prefix_1, &"-Xlinker"[1], 0, KIND::SeparateClass, LinkerInput,
-         "Pass <arg> to the linker", "<arg>"}};
+         "Pass <arg> to the linker", "<arg>"},
+    INFO{prefix_3, &"--version"[2], 0, KIND::FlagClass, CoreOption | CC1Option,
+         "Print version information"}};
 
 class DriverOptTable : public opt::OptTable {
 public:

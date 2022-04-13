@@ -19,12 +19,22 @@ OptTable::OptTable(const std::vector<Info> Infos) : OptionInfos(Infos) {
       }
     }
   }
+
+  for (auto prefix : PrefixesUnion) {
+    std::string Str(prefix);
+    for (unsigned i = 0; i < Str.size(); ++i) {
+      char C = Str[i];
+      if (std::string::size_type position =
+              PrefixChars.find(C) == std::string::npos)
+        PrefixChars.push_back(C);
+    }
+  }
 }
 
 static bool isInput(std::set<const char *> PrefixesUnion, const char *str) {
-
+  // FIXME: should we deal with --version/---version
   for (auto prefix : PrefixesUnion) {
-    if (!strcmp(prefix, str))
+    if (!std::string(str).find(prefix))
       return false;
   }
   return true;
@@ -44,15 +54,29 @@ std::unique_ptr<Arg> OptTable::ParseOneArg(const ArgList &Args,
   unsigned Prev = Index;
   const char *Str = Args.getArgString(Index);
   if (isInput(PrefixesUnion, Str))
-    return std::make_unique<Arg>(getOption(InputOptionID), Index++, Str);
+    return std::make_unique<Arg>(getOption(InputOptionID), std::string(Str),
+                                 Index++, Str);
 
-  // FIXME: Try to search more efficiently.
-  const Info *Start = OptionInfos.data();
-  const Info *End = OptionInfos.data() + OptionInfos.size();
-  // std::vector<Info>::iterator opt = find(OptionInfos.begin(),
-  // OptionInfos.end(), "");
+  auto getName = [this](const char *Ctr) -> std::string {
+    std::string Str(Ctr);
+    std::string::size_type pos = Str.find_first_not_of(PrefixChars);
+    return Str.substr(pos);
+  };
 
-  return std::make_unique<Arg>(getOption(UnknownOptionID), Index++, Str);
+  std::string target = getName(Str);
+  auto Start = std::find_if(
+      OptionInfos.begin(), OptionInfos.end(),
+      [&target](Info A) -> bool { return !strcmp(A.Name, target.c_str()); });
+
+  Option Opt(&*Start, this);
+  if (std::unique_ptr<Arg> A = Opt.accept(Args, Str, Index))
+    return A;
+
+  if (Prev != Index)
+    return nullptr;
+
+  return std::make_unique<Arg>(getOption(UnknownOptionID), std::string(Str),
+                               Index++, Str);
 }
 
 InputArgList OptTable::ParseArgs(std::vector<const char *> Args,

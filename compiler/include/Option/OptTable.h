@@ -3,8 +3,8 @@
 #include "Option/OptSpecifier.h"
 #include <cassert>
 #include <iostream>
-#include <vector>
 #include <set>
+#include <vector>
 
 namespace arvcc {
 
@@ -23,8 +23,8 @@ public:
     const char *Name;
     unsigned ID = 0;
     unsigned char Kind = '0';
-    unsigned int Flags;
-    const char *HelpText;
+    unsigned int Flags = 0;
+    const char *HelpText = nullptr;
     const char *MetaVar = nullptr;
   };
 
@@ -36,7 +36,8 @@ private:
 
   // The union of all option prefixes, If an argument does not begin with
   // one of these, it is an input.
-  std::set<const char*> PrefixesUnion;
+  std::set<const char *> PrefixesUnion;
+  std::string PrefixChars;
 
 public:
   const Info &getInfo(OptSpecifier Opt) const {
