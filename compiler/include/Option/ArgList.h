@@ -33,6 +33,7 @@ public:
   void ReleaseMem();
   void append(Arg *A);
   virtual const char *getArgString(unsigned Index) const = 0;
+  virtual unsigned getNumInputArgString() const = 0;
 };
 
 // InputArgList
@@ -60,6 +61,8 @@ public:
   const char *getArgString(unsigned Index) const override {
     return ArgStrings[Index];
   }
+
+  unsigned getNumInputArgString() const override { return ArgStrings.size(); }
 
   void replaceArgStrings(unsigned Index, const char *S) {
     ArgStrings[Index] = std::move(S);
