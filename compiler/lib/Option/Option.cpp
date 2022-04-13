@@ -17,7 +17,7 @@ Option::Option(const OptTable::Info *info, const OptTable *owner)
 
 std::unique_ptr<Arg> Option::accept(const ArgList &Args, std::string CurArg,
                                     unsigned &Index) const {
-
+  // FIXME: consider CroupedShortOption
   auto A(getKind() == FlagClass ? std::make_unique<Arg>(*this, CurArg, Index)
                                 : acceptInternal(Args, CurArg, Index));
 
