@@ -2,6 +2,7 @@
 #define ARVCC_ARGLIST_H
 
 #include "Option/Option.h"
+#include "Option/Arg.h"
 
 namespace arvcc {
 namespace opt {
@@ -29,11 +30,22 @@ protected:
 
   ~ArgList() = default;
 
+  Arg *getArg(unsigned Index) const { return Args[Index]; }
+
 public:
   void ReleaseMem();
   void append(Arg *A);
   virtual const char *getArgString(unsigned Index) const = 0;
   virtual unsigned getNumInputArgString() const = 0;
+
+  // Return the last argument matching Id. or nullptr.
+  bool hasArg(OptSpecifier Ids) const {
+    Arg *Res = nullptr;
+    for(Arg* A : Args) {
+        //FIXME: ID of both OptSpecifier and Info 
+    }
+    return Res != nullptr;
+  }
 };
 
 // InputArgList
@@ -62,11 +74,31 @@ public:
     return ArgStrings[Index];
   }
 
+  Arg *getInputArg(unsigned Index) const { return getArg(Index); }
+
   unsigned getNumInputArgString() const override { return ArgStrings.size(); }
 
   void replaceArgStrings(unsigned Index, const char *S) {
     ArgStrings[Index] = std::move(S);
   }
+};
+
+// DerivedArgList
+class DerivedArgList final : public ArgList {
+  const InputArgList &BaseArgs;
+
+public:
+  DerivedArgList(const InputArgList &BaseArgs);
+
+  const char *getArgString(unsigned Index) const override {
+    return BaseArgs.getArgString(Index);
+  }
+
+  unsigned getNumInputArgString() const override {
+    return BaseArgs.getNumInputArgString();
+  }
+
+  const InputArgList &getBaseArgs() const { return BaseArgs; }
 };
 } // namespace opt
 

@@ -21,3 +21,6 @@ InputArgList::InputArgList(std::vector<const char *> ArgArr)
     : ArgStrings(ArgArr) {}
 
 void InputArgList::ReleaseMemory() { ReleaseMem(); }
+
+DerivedArgList::DerivedArgList(const InputArgList &BaseArgs)
+    : BaseArgs(BaseArgs) {}

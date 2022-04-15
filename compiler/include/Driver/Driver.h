@@ -36,6 +36,11 @@ public:
       Args.push_back(args[i]);
   }
 
+private:
+  // Create a new derived argument list from the input argument,
+  // after applying the standard argument translations.
+  opt::DerivedArgList *TranslateInputArgs(const opt::InputArgList &Args) const;
+
 public:
   // Construct a Compilation object for a
   // command line arguments vector
@@ -54,6 +59,10 @@ public:
   const opt::OptTable &getOpts() const { return getDriverOptionTable(); }
 
   opt::InputArgList ParseArgStrings(bool ContainsError);
+
+  // Handle any arguments which should be
+  // treated before building actions or building tools.
+  bool HandleImmediateArgs(const Compilation &C);
 };
 
 } // namespace driver
