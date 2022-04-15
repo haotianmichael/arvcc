@@ -65,4 +65,21 @@ Driver::TranslateInputArgs(const opt::InputArgList &Args) const {
   return DAL;
 }
 
-bool Driver::HandleImmediateArgs(const Compilation &C) { return true; }
+bool Driver::HandleImmediateArgs(const Compilation &C) {
+
+  if (C.getArgs().hasArg(_HELP) || C.getArgs().hasArg(__HELP_HIDDEN)) {
+    PrintHelp(C.getArgs().hasArg(__HELP_HIDDEN));
+    return false;
+  }
+
+  if (C.getArgs().hasArg(__VERSION)) {
+    PrintVersion(C);
+    return false;
+  }
+
+  return true;
+}
+
+void PrintVersion(Compilation &C) {}
+
+void PrintHelp(bool showHidden) {}
