@@ -1,8 +1,8 @@
 #ifndef ARVCC_ARGLIST_H
 #define ARVCC_ARGLIST_H
 
-#include "Option/Option.h"
 #include "Option/Arg.h"
+#include "Option/Option.h"
 
 namespace arvcc {
 namespace opt {
@@ -41,8 +41,11 @@ public:
   // Return the last argument matching Id. or nullptr.
   bool hasArg(OptSpecifier Ids) const {
     Arg *Res = nullptr;
-    for(Arg* A : Args) {
-        //FIXME: ID of both OptSpecifier and Info 
+    for (Arg *A : Args) {
+      if (A->getOption().matches(Ids)) {
+        Res = A;
+        Res->claim();
+      }
     }
     return Res != nullptr;
   }

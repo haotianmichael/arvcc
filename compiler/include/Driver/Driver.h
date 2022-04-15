@@ -42,6 +42,12 @@ private:
   opt::DerivedArgList *TranslateInputArgs(const opt::InputArgList &Args) const;
 
 public:
+  /*
+   * @
+   * @name Primary Functionality
+   * @
+   * */
+
   // Construct a Compilation object for a
   // command line arguments vector
   Compilation *BuildCompilation();
@@ -60,9 +66,21 @@ public:
 
   opt::InputArgList ParseArgStrings(bool ContainsError);
 
+  /*
+   * @
+   * @name Helper Methods
+   * @
+   * */
+
   // Handle any arguments which should be
   // treated before building actions or building tools.
   bool HandleImmediateArgs(const Compilation &C);
+
+  // Print the help text.
+  void PrintHelp(bool ShowHidden) const;
+
+  // Print the driver version
+  void PrintVersion(const Compilation &C) const;
 };
 
 } // namespace driver
