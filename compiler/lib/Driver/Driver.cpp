@@ -15,7 +15,16 @@ Compilation *Driver::BuildCompilation() {
   bool ContainsError;
   CLOptions =
       std::make_unique<opt::InputArgList>(ParseArgStrings(ContainsError));
-  Compilation *C = new Compilation(*this);
+
+  opt::DerivedArgList *TranslateArgs = TranslateInputArgs(Args);
+
+  // TODO: Get Tools for different kinds of host machine.
+
+  Compilation *C =
+      new Compilation(*this, CLOptions.release(), TranslateArgs, ContainsError);
+  if (!HandleImmediateArgs(*C)) {
+    return C;
+  }
 
   return C;
 }
@@ -39,3 +48,21 @@ bool Driver::HasCC1Tool() {
                                [](const char *A) { return A != nullptr; });
   return (FirstArg != Args.end() && !strcmp(*FirstArg, "-cc1"));
 }
+
+opt::DerivedArgList *
+Driver::TranslateInputArgs(const opt::InputArgList &Args) const {
+
+  const opt::OptTable &Opts = getOpts();
+  opt::DerivedArgList *DAL = new opt::DerivedArgList(Args);
+
+  for (unsigned ii = 0, e = Args.getNumInputArgString(); ii < e; ii++) {
+    opt::Arg *A = Args.getInputArg(ii);
+    // TODO: Handling options
+
+    DAL->append(A);
+  }
+
+  return DAL;
+}
+
+bool Driver::HandleImmediateArgs(const Compilation &C) { return true; }

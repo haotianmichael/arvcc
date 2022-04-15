@@ -19,6 +19,9 @@ private:
   // ArgList
   unsigned index;
 
+  // This is used for generating "argument unused" flag
+  mutable unsigned Claimed : 1;
+
   // Does this argument own its value?
   mutable unsigned OwnsValues : 1;
 
@@ -36,6 +39,8 @@ public:
   unsigned getIndex() { return index; }
 
   std::vector<const char *> &getValue() { return value; }
+
+  void claim() const { Claimed = true; }
 };
 
 } // namespace opt
