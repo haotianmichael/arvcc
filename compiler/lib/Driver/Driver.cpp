@@ -16,7 +16,7 @@ Compilation *Driver::BuildCompilation() {
   CLOptions =
       std::make_unique<opt::InputArgList>(ParseArgStrings(ContainsError));
 
-  opt::DerivedArgList *TranslateArgs = TranslateInputArgs(Args);
+  opt::DerivedArgList *TranslateArgs = TranslateInputArgs(*CLOptions.release());
 
   // TODO: Get Tools for different kinds of host machine.
 
@@ -56,7 +56,7 @@ Driver::TranslateInputArgs(const opt::InputArgList &Args) const {
   opt::DerivedArgList *DAL = new opt::DerivedArgList(Args);
 
   for (unsigned ii = 0, e = Args.getNumInputArgString(); ii < e; ii++) {
-    opt::Arg *A = Args.getInputArg(ii);
+    opt::Arg *A = Args.getArg(ii);
     // TODO: Handling options
 
     DAL->append(A);
@@ -80,6 +80,6 @@ bool Driver::HandleImmediateArgs(const Compilation &C) {
   return true;
 }
 
-void PrintVersion(Compilation &C) {}
+void Driver::PrintVersion(const Compilation &C) const {}
 
-void PrintHelp(bool showHidden) {}
+void Driver::PrintHelp(bool showHidden) const {}
