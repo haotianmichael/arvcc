@@ -30,13 +30,14 @@ protected:
 
   ~ArgList() = default;
 
-  Arg *getArg(unsigned Index) const { return Args[Index]; }
-
 public:
-  void ReleaseMem();
-  void append(Arg *A);
   virtual const char *getArgString(unsigned Index) const = 0;
   virtual unsigned getNumInputArgString() const = 0;
+
+  void ReleaseMem();
+  void append(Arg *A);
+  unsigned size() { return Args.size(); }
+  Arg *getArg(unsigned Index) const { return Args[Index]; }
 
   // Return the last argument matching Id. or nullptr.
   bool hasArg(OptSpecifier Ids) const {
@@ -76,8 +77,6 @@ public:
   const char *getArgString(unsigned Index) const override {
     return ArgStrings[Index];
   }
-
-  Arg *getInputArg(unsigned Index) const { return getArg(Index); }
 
   unsigned getNumInputArgString() const override { return ArgStrings.size(); }
 
