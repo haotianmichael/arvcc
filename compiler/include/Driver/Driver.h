@@ -3,6 +3,7 @@
 
 #include "Diag/Diagnostic.h"
 #include "Driver/DriverOption.h"
+#include "Driver/DriverTypes.h"
 #include "Option/ArgList.h"
 #include "Option/OptTable.h"
 
@@ -22,10 +23,16 @@ private:
   DiagnosticEngine &Diags;
 
   // command line arguments
-  std::vector<const char *> Args;
+  std::vector<const char *> PreArgs;
 
   // parsed arguments
   std::unique_ptr<opt::InputArgList> CLOptions;
+
+  // An input type and its arguments
+  using InputTy = std::pair<types::ID, const opt::Arg *>;
+
+  // A list of inputs and their types for the given arguments
+  using InputList = std::vector<InputTy>;
 
 public:
   Driver(DiagnosticEngine &diags, const char **args, int argc)
@@ -33,7 +40,7 @@ public:
     if (1 == argc)
       Diags.DiagError("no Input files");
     for (int i = 1; i < argc; i++)
-      Args.push_back(args[i]);
+      PreArgs.push_back(args[i]);
   }
 
 private:
@@ -42,6 +49,13 @@ private:
   opt::DerivedArgList *TranslateInputArgs(const opt::InputArgList &Args) const;
 
 public:
+  /*
+   * @name Accessors
+   * */
+
+  // Arguments Parsing Tools
+  const opt::OptTable &getOpts() const { return getDriverOptionTable(); }
+
   /*
    * @
    * @name Primary Functionality
@@ -52,6 +66,14 @@ public:
   // command line arguments vector
   Compilation *BuildCompilation();
 
+  // Parse the given list of strings into an
+  // ArgList
+  opt::InputArgList ParseArgStrings(bool ContainsError);
+
+  // Construct the list of inputs and their types from
+  // the given arguments
+  void BuildInpts(opt::DerivedArgList &Args, InputList &Inputs) const;
+
   // Execute a compilation according to
   // command line arguments
   int ExecuteCompilation(Compilation &C);
@@ -60,11 +82,6 @@ public:
   bool HasCC1Tool();
 
   int ExecuteCC1Tool();
-
-  // Arguments Parsing Tools
-  const opt::OptTable &getOpts() const { return getDriverOptionTable(); }
-
-  opt::InputArgList ParseArgStrings(bool ContainsError);
 
   /*
    * @
