@@ -16,7 +16,7 @@ Compilation *Driver::BuildCompilation() {
   CLOptions =
       std::make_unique<opt::InputArgList>(ParseArgStrings(ContainsError));
 
-  opt::DerivedArgList *TranslateArgs = TranslateInputArgs(*CLOptions.release());
+  opt::DerivedArgList *TranslateArgs = TranslateInputArgs(*CLOptions);
 
   // TODO: Get Tools for different kinds of host machine.
 
@@ -25,6 +25,8 @@ Compilation *Driver::BuildCompilation() {
   if (!HandleImmediateArgs(*C)) {
     return C;
   }
+
+  InputList Inputs;
 
   return C;
 }
@@ -37,16 +39,16 @@ opt::InputArgList Driver::ParseArgStrings(bool ContainsError) {
   unsigned MissingArgIndex;
   unsigned MissingArgCount;
   opt::InputArgList Args =
-      getOpts().ParseArgs(this->Args, MissingArgIndex, MissingArgCount);
+      getOpts().ParseArgs(this->PreArgs, MissingArgIndex, MissingArgCount);
 
   return Args;
 }
 
 bool Driver::HasCC1Tool() {
 
-  auto FirstArg = std::find_if(Args.begin(), Args.end(),
+  auto FirstArg = std::find_if(PreArgs.begin(), PreArgs.end(),
                                [](const char *A) { return A != nullptr; });
-  return (FirstArg != Args.end() && !strcmp(*FirstArg, "-cc1"));
+  return (FirstArg != PreArgs.end() && !strcmp(*FirstArg, "-cc1"));
 }
 
 opt::DerivedArgList *

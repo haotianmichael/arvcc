@@ -1,0 +1,50 @@
+//===--------------------------------------------------------------------===//
+//
+// This file defines the driver type information.
+//
+//===---------------------------------------------------------------------===//
+
+#ifndef TYPE
+#error "Define TYPE prior to including this file!"
+#endif
+
+// TYPE(NAME, ID, PP_TYPE, TEMP_SUFFIX, FLAGS)
+
+// The first value is the type name as a string, for types which can 
+// be user specified this should be the equivalent -x option.
+
+// The second value is the type id, which will result in a 
+// clang::driver::types::TY_XX enum constant.
+
+// The third value is that id of the type for preprocessed inputs of
+// this type, or INVALID if this type is not preprocessed.
+
+// The fourth value is the suffix to use when creating temporary files 
+// of this type, or null if unspecified.
+
+//  The final value is a variadic list of phases for each type. Eventually the
+// options flag string will be replaced with this variadic list.
+
+
+
+// C family source language (with and without preprocessed).
+TYPE("cpp-output",      PP_C,    INVALID,  "i",    phases::Compile, phases::Backend, phases::Assemble, phases::Link)
+TYPE("c",               C,       PP_C,     "c",    phases::Preprocess, phases::Compile, phases::Backend, phases::Assemble, phases::Link)
+TYPE("c++-cpp-output",  PP_CXX,  INVALID,  "ii",   phases::Compile, phases::Backend, phases::Assemble, phases::Link) 
+TYPE("c++",             CXX,     PP_CXX,   "cpp",  phases::Preprocess, phases::Compile, phases::Backend, phases::Assemble, phases::Link)
+
+// C family input files to precompile.
+TYPE("c-header-cpp-output",    PP_CHeader,   INVALID,      "i",   phases::Precompile) 
+TYPE("c-header",               CHeader,      PP_CHeader,   "h",   phases::Preprocess, phases::Precompile)
+TYPE("c++-header-cpp-output",  PP_CXXHeader, INVALID,      "ii",  phases::Precompile)    
+TYPE("c++-header",             CXXHeader,    PP_CXXHeader, "hhh", phases::Preprocess, phases::Precompile)
+
+// Other languages.
+TYPE("assembler",              PP_Asm,       INVALID,       "s",  phases::Assemble, phases::Link)
+
+// TODO: Arvcc IR types. 
+
+// Misc.
+TYPE("ast",                    AST,          INVALID,       "ast",   phases::Compile, phases::Backend, phases::Assemble, phases::Link)
+TYPE("object",                 Object,       INVALID,       "o",     phases::Link)
+TYPE("none",                   Nothing,      INVALID,       nullptr, phases::Compile, phases::Backend,  phases::Assemble, phases::Link)
