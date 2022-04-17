@@ -10,6 +10,50 @@
 using namespace arvcc;
 using namespace arvcc::driver;
 
+void Driver::BuildInpts(opt::DerivedArgList &Args, InputList &Inputs) const {
+
+  types::ID InputType = types::TY_Nothing;
+  opt::Arg *InputTypeArg = nullptr;
+
+  for (unsigned ii = 0, e = Args.size(); ii < e; ++ii) {
+    opt::Arg *A = Args.getArg(ii);
+    if (A->getOption().getKind() == opt::Option::InputClass) {
+      const char *Value = A->getValue();
+      types::ID Ty = types::TY_INVALID;
+
+      // Infer the input type if necessary.
+      if (InputType == types::TY_Nothing) {
+
+        // stdin must be handled specially.
+        if (memcmp(Value, "-", 2) == 0) {
+          if (!Args.hasArgNoClaim(_E)) {
+            Diags.DiagError("unknown stdin type.");
+          }
+          Ty = types::TY_C;
+        } else {
+          // Otherwise lookup by extension
+          if (const char *Ext = strrchr(Value, '.'))
+            Ty = types::lookupTypeForExtension(Ext);
+        }
+      } else {
+        if (!InputTypeArg->getOption().matches(_x)) {
+          const char *Ext = strrchr(Value, '.');
+          if (Ext && types::lookupTypeForExtension(Ext + 1) == types::TY_Object)
+            Ty = types::TY_Object;
+        }
+
+        if (Ty == types::TY_INVALID) {
+          Ty = InputType;
+          // InputTypeArg->claim();
+        }
+      }
+      Inputs.push_back(std::make_pair(Ty, A));
+    } else if (A->getOption().hasFlag(LinkerInput)) {
+      Inputs.push_back(std::make_pair(types::TY_Object, A));
+    }
+  }
+}
+
 Compilation *Driver::BuildCompilation() {
 
   bool ContainsError;
@@ -26,7 +70,9 @@ Compilation *Driver::BuildCompilation() {
     return C;
   }
 
+  // Construct the list of inputs.
   InputList Inputs;
+  BuildInpts(*TranslateArgs, Inputs);
 
   return C;
 }
