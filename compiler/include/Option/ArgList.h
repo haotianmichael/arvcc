@@ -50,6 +50,18 @@ public:
     }
     return Res != nullptr;
   }
+
+  // Return the last argument Id, or null. Do not "claim" the
+  // option (don't mark it as having been used).
+  bool hasArgNoClaim(OptSpecifier Ids) const {
+    Arg *Res = nullptr;
+    for (Arg *A : Args) {
+      if (A->getOption().matches(Ids)) {
+        Res = A;
+      }
+    }
+    return Res != nullptr;
+  }
 };
 
 // InputArgList

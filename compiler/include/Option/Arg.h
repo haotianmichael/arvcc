@@ -38,7 +38,9 @@ public:
 
   unsigned getIndex() { return index; }
 
-  std::vector<const char *> &getValue() { return value; }
+  std::vector<const char *> &getValues() { return value; }
+
+  const char *getValue(unsigned Index = 0) { return value[Index]; }
 
   void claim() const { Claimed = true; }
 };

@@ -17,10 +17,14 @@ namespace types {
 enum ID {
   TY_INVALID,
 #define TYPE(NAME, ID, PP_TYPE, TEMP_SUFFIX, ...) TY_##ID,
-#include "Driver/DriverTypes.h"
+#include "Driver/DriverTypes.def"
 #undef TYPE
   TY_LAST
 };
+
+// Lookup the type to use for the file
+// extension \p Ext.
+ID lookupTypeForExtension(std::string Ext);
 
 } // namespace types
 } // namespace driver

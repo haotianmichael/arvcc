@@ -47,6 +47,8 @@ public:
 
   bool matches(OptSpecifier ID) const;
 
+  bool hasFlag(unsigned Val) const { return Info->Flags & Val; }
+
   // Potentially accept the current argument, returning a
   // new Arg instance, or 0 of the option does not accept
   // this argument (or the argument is missing values).
